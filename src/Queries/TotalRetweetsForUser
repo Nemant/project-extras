@@ -1,0 +1,11 @@
+﻿CREATE TABLE "FinalProject".Total_Retweets_For_User AS
+SELECT 
+  total_retweets_for_tweet."User", 
+  SUM(total_retweets_for_tweet."Total No. of Retweets") AS "Total Retweets",
+  COUNT(total_retweets_for_tweet."TweetID") AS "Total No. Of Tweets"
+FROM 
+  "FinalProject".total_retweets_for_tweet
+GROUP BY
+  total_retweets_for_tweet."User"
+ORDER BY
+  "Total Retweets" DESC;

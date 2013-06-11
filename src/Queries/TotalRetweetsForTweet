@@ -1,0 +1,17 @@
+﻿CREATE TABLE "FinalProject".Total_Retweets_For_Tweet AS
+SELECT 
+  "Tweets"."TweetID",
+  "Tweets"."DateTime",
+  "Tweets"."User",
+  COUNT("ReTweets"."TweetID") AS "Total No. of Retweets",
+  "Tweets"."Blog"
+FROM 
+  "FinalProject"."Tweets", 
+  "FinalProject"."ReTweets"
+WHERE 
+  "Tweets"."TweetID" = "ReTweets"."OriginalTweetID" AND
+  "ReTweets"."DateTime" < '2013-03-22'
+GROUP BY
+  "Tweets"."TweetID", "Tweets"."DateTime", "Tweets"."User", "Tweets"."Blog"
+ORDER BY
+  "Total No. of Retweets" DESC;

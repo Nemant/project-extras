@@ -1,0 +1,14 @@
+﻿SELECT *
+FROM "FinalProject"."ReTweets"
+WHERE "OriginalTweetID" IN (
+	SELECT "TweetID"
+	FROM "FinalProject"."total_retweets_for_tweet"
+	WHERE 	"total_retweets_for_tweet"."User" = '34613288' OR
+		"total_retweets_for_tweet"."User" = '538031518'
+	ORDER BY
+	"Total No. of Retweets"  DESC
+	LIMIT 200
+	) AND
+	"ReTweets"."DateTime" < '2013-03-03 21:00'
+ORDER BY 	"ReTweets"."OriginalTweetID" ASC,
+		"ReTweets"."DateTime" ASC;
