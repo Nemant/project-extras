@@ -179,7 +179,7 @@ public class Metrics {
 	}
 
 	public static void getUserData() {
-		ResultSet rs = QueryDB.getTopTweetedUsers();
+		ResultSet rs = QueryDB.getTopAvgTweetedUsers();
 		Twitter twitter = new TwitterFactory().getSingleton();
 		try {
 			rs.next();
@@ -202,7 +202,6 @@ public class Metrics {
 				} catch (TwitterException e) {
 					e.printStackTrace();
 				}
-//				break;
 			} 
 		} catch (SQLException e) {
 					e.printStackTrace();
