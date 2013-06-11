@@ -44,9 +44,9 @@ public class TwitterSearchExample {
 		Connector connector = new Connector();
 		QueryDB querydb = new QueryDB();
 		Metrics metric = new Metrics();
-		Store store = new Store();
 		
-		metric.generateTimeLineForReTweets();
+		metric.getUserData();
+
 		
 //		String[] users = new String[2];
 //		users[0] = "34613288";
