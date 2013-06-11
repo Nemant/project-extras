@@ -201,11 +201,11 @@ public class QueryDB {
 			e.printStackTrace();
 		}
 		
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		try {
+////			connection.close();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		
 		return rs;
 		}
