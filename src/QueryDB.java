@@ -195,7 +195,7 @@ public class QueryDB {
 		ResultSet rs = null; 
 		
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT \"User\", \"UserName\", \"Followers\", \"Followees\", \"Location\", \"Timezone\"  FROM \"FinalProject\".\"total_retweets_for_user\" ORDER BY \"Total Retweets\" DESC LIMIT 60");
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT \"User\", \"UserName\", \"Followers\", \"Followees\", \"Location\", \"Timezone\"  FROM \"FinalProject\".\"total_retweets_for_user\" ORDER BY \"Total Retweets\" DESC LIMIT 60", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			rs = preparedStatement.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
