@@ -186,7 +186,7 @@ public class Metrics {
 			while (rs.next()) {
 				try {
 					User user = twitter.showUser(Long.parseLong(rs.getString(1)));
-					System.out.println(user.getName());
+					System.out.println(user.getScreenName());
 //					rs.updateString(2, user.getName());
 //					rs.updateRow();
 				} catch (NumberFormatException e) {
