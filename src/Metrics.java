@@ -187,6 +187,10 @@ public class Metrics {
 				try {
 					User user = twitter.showUser(Long.parseLong(rs.getString(1)));
 					System.out.println(user.getScreenName());
+					System.out.println(user.getFollowersCount());
+					System.out.println(user.getFriendsCount());
+					System.out.println(user.getLocation());
+					System.out.println(user.getTimeZone());
 //					rs.updateString(2, user.getName());
 //					rs.updateRow();
 				} catch (NumberFormatException e) {
