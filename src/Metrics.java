@@ -186,13 +186,12 @@ public class Metrics {
 			while (rs.next()) {
 				try {
 					User user = twitter.showUser(Long.parseLong(rs.getString(1)));
-					System.out.println(user.getScreenName());
-					System.out.println(user.getFollowersCount());
-					System.out.println(user.getFriendsCount());
-					System.out.println(user.getLocation());
-					System.out.println(user.getTimeZone());
-//					rs.updateString(2, user.getName());
-//					rs.updateRow();
+					rs.updateString(2, user.getScreenName());
+					rs.updateInt(3, user.getFollowersCount());
+					rs.updateInt(4, user.getFriendsCount());
+					rs.updateString(5, user.getLocation());
+					rs.updateString(6, user.getTimeZone());
+					rs.updateRow();
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 				} catch (TwitterException e) {
