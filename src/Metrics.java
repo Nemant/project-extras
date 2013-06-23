@@ -71,7 +71,6 @@ public class Metrics {
 			    
 			    store.updateRetweetsForTweet(originalTweets, retweetsForOriginalTweet);
 			    
-			    
 			    tweetsInInterval = 0;
 				retweetsInInterval = 0;
 				usersTweetingInInterval.clear();

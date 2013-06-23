@@ -154,7 +154,7 @@ public class Store {
 					totalRetweets = totalRetweets + originalUserRetweetsCount.get(userID);
 					rs.updateInt(2, totalRetweets);
 					rs.updateInt(4, totalRetweets / rs.getInt(3));
-					rs.updateInt(10, totalRetweets / rs.getInt(6)); // Use dedcimals
+					rs.updateFloat(10, (float)Math.round((totalRetweets / rs.getInt(6))*1000) / 1000); // Use dedcimals
 				}
 
 			} catch (SQLException e) {
