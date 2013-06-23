@@ -1,4 +1,4 @@
-﻿CREATE TABLE "FinalProject".Total_Retweets_For_User AS
+CREATE TABLE "FinalProject".Total_Retweets_For_User AS
 SELECT 
   total_retweets_for_tweet."User", 
   SUM(total_retweets_for_tweet."Total No. of Retweets") AS "Total Retweets",

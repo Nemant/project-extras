@@ -1,4 +1,4 @@
-﻿CREATE TABLE "FinalProject".Total_Retweets_For_Tweet AS
+CREATE TABLE "FinalProject".Total_Retweets_For_Tweet AS
 SELECT 
   "Tweets"."TweetID",
   "Tweets"."DateTime",

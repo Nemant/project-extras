@@ -59,7 +59,7 @@ public class Store {
 		return preparedStatement;
 	}
 	
-	public static void updateInInterval(EnumDataSet workingSet, Calendar start, Calendar end, int count, int uniqueUsers) {
+	public void updateInInterval(EnumDataSet workingSet, Calendar start, Calendar end, int count, int uniqueUsers) {
 		connection = Connector.getConnection();
 		String query = "";
 		try {

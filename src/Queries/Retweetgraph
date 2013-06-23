@@ -1,4 +1,4 @@
-﻿SELECT *
+SELECT *
 FROM "FinalProject"."ReTweets"
 WHERE "OriginalTweetID" IN (
 	SELECT "TweetID"

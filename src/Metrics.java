@@ -31,7 +31,8 @@ public class Metrics {
 	Store store;
 	int tweetCount;
 	int retweetCount;
-	Set<String> users;
+	Set<String> usersT;
+	Set<String> usersRT;
 	Timer timer;
 	
 	
@@ -39,29 +40,32 @@ public class Metrics {
 		store = new Store();
 		tweetCount = 0;
 		retweetCount = 0;
-		users = new HashSet<String>();
+		usersT = new HashSet<String>();
+		usersRT = new HashSet<String>();
 		timer = new Timer();
 		
 		timer.scheduleAtFixedRate(new TimerTask() {
-			Date dateStart;
-			Date dateEnd;
 			Calendar cal;
+			Calendar cal2;
 			  @Override
 			  public void run() {
-				dateEnd = new Date();
 				
 				cal = Calendar.getInstance();
-				cal.setTime                       b(currentDate);
-				cal.add(Calendar.HOUR, -1);
-				Date oneHourBack = cal.getTime();
+				cal2 = (Calendar) cal.clone();
+				cal2.add(Calendar.SECOND, -20);
 				
 			    System.out.println("Tweets: " + tweetCount);
 			    System.out.println("ReTweets: " + retweetCount);
-			    System.out.println("Users: " + users.size());
+			    System.out.println("Users: " + usersT.size());
+			    System.out.println("Users: " + usersRT.size());
+			    
+			    store.updateInInterval(EnumDataSet.TWEETS, cal, cal2, tweetCount, usersT.size());
+			    store.updateInInterval(EnumDataSet.RETWEETS, cal, cal2, retweetCount, usersRT.size()); 
+			    
 			    tweetCount = 0;
 				retweetCount = 0;
-				users = new HashSet<String>();
-				dateStart = dateEnd.;
+				usersT = new HashSet<String>();
+				usersRT = new HashSet<String>();
 			  }
 			}, 20*1000, 20*1000);
 	}
@@ -69,10 +73,11 @@ public class Metrics {
 	public void processStatus(Status tweet) {    	
     	if (tweet.isRetweet()) {
     		retweetCount++;
+        	usersRT.add(tweet.getUser().getName());
     	} else {
     		tweetCount++;
+        	usersT.add(tweet.getUser().getName());
     	}
-    	users.add(tweet.getUser().getName());
     	store.storeData(tweet);
 	}
 	
@@ -116,7 +121,7 @@ public class Metrics {
 				e.printStackTrace();
 			}
 			
-			Store.updateInInterval(workingSet, startTime, currTime, count, uniqueUsers.size());
+			store.updateInInterval(workingSet, startTime, currTime, count, uniqueUsers.size());
 			
 			startTime.setTimeInMillis(currTime.getTimeInMillis());
 			currTime.add(Calendar.MINUTE, 10);
