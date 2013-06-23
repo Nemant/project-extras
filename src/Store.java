@@ -146,6 +146,8 @@ public class Store {
 			String userID = (String) pairs.getKey();
 			User value = (User) pairs.getValue();
 
+			if (value.getScreenName().equals("danishkhanbcn"))
+			System.out.println("Whaaaaat!!!!");
 			ResultSet rs = QueryDB.getRetweetsForUser(userID);
 
 			int totalRetweets = 0;
