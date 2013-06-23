@@ -171,6 +171,7 @@ public class Store {
 		ResultSet rs = QueryDB.getRetweetsForUser(userID);
 		try {
 			if (rs.next()) {
+				System.out.println("yo!" + rs.getInt(3));
 				rs.updateInt(3, rs.getInt(3) + 1);
 				rs.updateInt(4, rs.getInt(2) / rs.getInt(3));
 			} else {
