@@ -19,6 +19,7 @@ public class TwitterStreamingExample {
 		
 		StatusListener listener = new StatusListener(){
 			Metrics metric = new Metrics();
+			QueryDB queryDB = new QueryDB();
 			
 	        public void onStatus(Status tweet) {
 	        	metric.processStatus(tweet);

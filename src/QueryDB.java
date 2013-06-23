@@ -38,6 +38,35 @@ public class QueryDB {
 		return rs;
 	}
 	
+	public static ResultSet getRetweetsForTweet(String tweetID){
+		ResultSet rs = null;
+		String query = "SELECT * " +
+				  "FROM \"FinalProject\".total_retweets_for_tweet_live " +
+						"WHERE \"TweetID\" = '" + tweetID + "'";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rs;
+	}
+	
+	public static ResultSet getRetweetsForUser(String userID){
+		ResultSet rs = null;
+		String query = "SELECT * " +
+				  "FROM \"FinalProject\".total_retweets_for_user_live " +
+						"WHERE \"User\" = '" + userID + "'";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return rs;
+	}
 	/**
 	 * A = Top 200 rows from total_retweets_for_tweet in ascending order of date
 	 * PTS = previous time slice: get first row from A and get the time

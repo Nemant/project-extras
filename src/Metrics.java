@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
@@ -29,20 +30,31 @@ import twitter4j.User;
 
 public class Metrics {
 	Store store;
-	int tweetCount;
-	int retweetCount;
-	Set<String> usersT;
-	Set<String> usersRT;
+	int tweetsInInterval;
+	int retweetsInInterval;
+	Set<String> usersTweetingInInterval;
+	Set<String> usersRetweetingInInterval;
 	Timer timer;
 	
+	HashMap<String, Status> originalTweets;
+	HashMap<String, Integer> retweetsForOriginalTweet;
+	
+	HashMap<String, User> originalUserInfo;
+	HashMap<String, Integer> originalUserRetweetsCount;
 	
 	Metrics() {
 		store = new Store();
-		tweetCount = 0;
-		retweetCount = 0;
-		usersT = new HashSet<String>();
-		usersRT = new HashSet<String>();
+		tweetsInInterval = 0;
+		retweetsInInterval = 0;
+		usersTweetingInInterval = new HashSet<String>();
+		usersRetweetingInInterval = new HashSet<String>();
 		timer = new Timer();
+		
+		originalTweets = new HashMap<String, Status>();
+		retweetsForOriginalTweet = new HashMap<String, Integer>();
+		
+		originalUserInfo = new HashMap<String, User>();
+		originalUserRetweetsCount = new HashMap<String, Integer>();
 		
 		timer.scheduleAtFixedRate(new TimerTask() {
 			Calendar cal;
@@ -54,36 +66,56 @@ public class Metrics {
 				cal2 = (Calendar) cal.clone();
 				cal2.add(Calendar.SECOND, -20);
 				
-			    System.out.println("Tweets: " + tweetCount);
-			    System.out.println("ReTweets: " + retweetCount);
-			    System.out.println("Users: " + usersT.size());
-			    System.out.println("Users: " + usersRT.size());
+			    store.updateInInterval(EnumDataSet.TWEETS, cal, cal2, tweetsInInterval, usersTweetingInInterval.size());
+			    store.updateInInterval(EnumDataSet.RETWEETS, cal, cal2, retweetsInInterval, usersRetweetingInInterval.size()); 
 			    
-			    store.updateInInterval(EnumDataSet.TWEETS, cal, cal2, tweetCount, usersT.size());
-			    store.updateInInterval(EnumDataSet.RETWEETS, cal, cal2, retweetCount, usersRT.size()); 
+			    store.updateRetweetsForTweet(originalTweets, retweetsForOriginalTweet);
 			    
-			    tweetCount = 0;
-				retweetCount = 0;
-				usersT = new HashSet<String>();
-				usersRT = new HashSet<String>();
+			    
+			    tweetsInInterval = 0;
+				retweetsInInterval = 0;
+				usersTweetingInInterval.clear();
+				usersRetweetingInInterval.clear();
 			  }
 			}, 20*1000, 20*1000);
 	}
 	
-	public void processStatus(Status tweet) {    	
+	public void processStatus(Status tweet) {
     	if (tweet.isRetweet()) {
-    		retweetCount++;
-        	usersRT.add(tweet.getUser().getName());
-        	// create new total_retweet_for_tweet and total_retweet_for_user
-        	// use hashmap to keep the retweet count for a tweet and the same for the user
+    		retweetsInInterval++;
+    		usersRetweetingInInterval.add(tweet.getUser().getName());
+        	
+        	String originalTweetID = Long.toString(tweet.getRetweetedStatus().getId()); 
+        	String userID = Long.toString(tweet.getRetweetedStatus().getUser().getId());
+
+        	originalTweets.put(originalTweetID, tweet.getRetweetedStatus());
+        	
+        	int totalretweets = 0;
+        	if (retweetsForOriginalTweet.containsKey(originalTweetID)) {
+        		totalretweets = retweetsForOriginalTweet.get(originalTweetID);
+        	}
+        	
+        	totalretweets++;
+        	retweetsForOriginalTweet.put(originalTweetID, totalretweets);
+        	
+        	totalretweets = 0;
+        	if (originalUserInfo.containsKey(userID)) {
+        		totalretweets = originalUserRetweetsCount.get(userID);
+        	}
+        	
+        	totalretweets++;
+        	originalUserRetweetsCount.put(userID, totalretweets);
+        	
         	// get stuff data from DB, add numbers together, work out average, update it.
         	// BOOM
     	} else {
-    		tweetCount++;
-        	usersT.add(tweet.getUser().getName());
+    		tweetsInInterval++;
+        	usersTweetingInInterval.add(tweet.getUser().getName());
+        	store.storeUser(tweet.getUser());
     	}
     	// STORE DYA DAMM RACHIO BRAV
     	store.storeData(tweet);
+    	
 	}
 	
 	public void generateTimeLineForTweets() {
