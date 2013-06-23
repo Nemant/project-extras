@@ -74,10 +74,15 @@ public class Metrics {
     	if (tweet.isRetweet()) {
     		retweetCount++;
         	usersRT.add(tweet.getUser().getName());
+        	// create new total_retweet_for_tweet and total_retweet_for_user
+        	// use hashmap to keep the retweet count for a tweet and the same for the user
+        	// get stuff data from DB, add numbers together, work out average, update it.
+        	// BOOM
     	} else {
     		tweetCount++;
         	usersT.add(tweet.getUser().getName());
     	}
+    	// STORE DYA DAMM RACHIO BRAV
     	store.storeData(tweet);
 	}
 	
