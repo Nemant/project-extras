@@ -18,11 +18,11 @@ public class TwitterStreamingExample {
 		Connector connector = new Connector();
 		
 		StatusListener listener = new StatusListener(){
-			Store store = new Store();
+			Metrics metric = new Metrics();
 			
 	        public void onStatus(Status tweet) {
-	        	store.storeData(tweet);
-	            System.out.println(tweet.getUser().getName() + " : " + tweet.getText());
+	        	metric.processStatus(tweet);
+//	            System.out.println(tweet.getUser().getName() + " : " + tweet.getText());
 	        }
 	        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
 	        public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}

@@ -25,7 +25,7 @@ public class QueryDB {
 			query = query + "FROM \"FinalProject\".\"ReTweets\"";
 		}
 		
-		query = query + "WHERE \"DateTime\" > '" + start.getTime().toString() + "' AND " +
+		query = query + " WHERE \"DateTime\" > '" + start.getTime().toString() + "' AND " +
 		 					  "\"DateTime\" < '" + end.getTime().toString() + "' " +
 		 				";";
 		

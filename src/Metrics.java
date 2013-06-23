@@ -1,10 +1,15 @@
 import java.io.File;
 import java.io.IOException;
+import java.security.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.jfree.data.time.Second;
 import java.util.LinkedList;
@@ -15,6 +20,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -22,7 +28,54 @@ import twitter4j.User;
 
 
 public class Metrics {
-
+	Store store;
+	int tweetCount;
+	int retweetCount;
+	Set<String> users;
+	Timer timer;
+	
+	
+	Metrics() {
+		store = new Store();
+		tweetCount = 0;
+		retweetCount = 0;
+		users = new HashSet<String>();
+		timer = new Timer();
+		
+		timer.scheduleAtFixedRate(new TimerTask() {
+			Date dateStart;
+			Date dateEnd;
+			Calendar cal;
+			  @Override
+			  public void run() {
+				dateEnd = new Date();
+				
+				cal = Calendar.getInstance();
+				cal.setTime                       b(currentDate);
+				cal.add(Calendar.HOUR, -1);
+				Date oneHourBack = cal.getTime();
+				
+			    System.out.println("Tweets: " + tweetCount);
+			    System.out.println("ReTweets: " + retweetCount);
+			    System.out.println("Users: " + users.size());
+			    tweetCount = 0;
+				retweetCount = 0;
+				users = new HashSet<String>();
+				dateStart = dateEnd.;
+			  }
+			}, 20*1000, 20*1000);
+	}
+	
+	public void processStatus(Status tweet) {    	
+    	if (tweet.isRetweet()) {
+    		retweetCount++;
+    	} else {
+    		tweetCount++;
+    	}
+    	users.add(tweet.getUser().getName());
+    	store.storeData(tweet);
+	}
+	
 	public void generateTimeLineForTweets() {
 		generateTimeLine(EnumDataSet.TWEETS);
 	}
@@ -34,13 +87,16 @@ public class Metrics {
 	/**
 	 * Generates timeline for tweet volume
 	 * */
-	private void generateTimeLine(EnumDataSet workingSet) {
+	public void generateTimeLine(EnumDataSet workingSet) {
+		Date date = new Date();
+		System.out.println("Today is " + date.getTime());
+		
 		Calendar startTime = Calendar.getInstance();
-		startTime.set(2013, 2, 2, 22, 36, 0);
+		startTime.set(2013, 2, 21, 16, 16, 0);
 		startTime.set(Calendar.MILLISECOND, 0);
 
 		Calendar endTime = Calendar.getInstance();
-		endTime.set(2013, 2, 21, 16, 10, 0);
+		endTime.set(2013, 5, 22, 16, 46, 0);
 		endTime.set(Calendar.MILLISECOND, 0);
 		
 		Calendar currTime = Calendar.getInstance();
@@ -67,6 +123,8 @@ public class Metrics {
 			count = 0;
 		}
 		
+		date = new Date();
+		System.out.println("Today is " + date.getTime());
 	}
 	
 	private void createChart(LinkedList<ReTweetInInterval> retweetsList ){

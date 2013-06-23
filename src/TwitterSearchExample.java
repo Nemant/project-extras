@@ -43,9 +43,10 @@ public class TwitterSearchExample {
 //
 		Connector connector = new Connector();
 		QueryDB querydb = new QueryDB();
+		
 		Metrics metric = new Metrics();
 		
-		metric.getUserData();
+		metric.generateTimeLine(EnumDataSet.RETWEETS);
 
 		
 //		String[] users = new String[2];

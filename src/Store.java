@@ -60,6 +60,7 @@ public class Store {
 	}
 	
 	public static void updateInInterval(EnumDataSet workingSet, Calendar start, Calendar end, int count, int uniqueUsers) {
+		connection = Connector.getConnection();
 		String query = "";
 		try {
 			if (workingSet == EnumDataSet.TWEETS) {
