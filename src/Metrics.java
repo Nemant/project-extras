@@ -70,6 +70,7 @@ public class Metrics {
 			    store.updateInInterval(EnumDataSet.RETWEETS, cal, cal2, retweetsInInterval, usersRetweetingInInterval.size()); 
 			    
 			    store.updateRetweetsForTweet(originalTweets, retweetsForOriginalTweet);
+			    store.updateRetweetsForUser(originalUserInfo, originalUserRetweetsCount);
 			    
 			    tweetsInInterval = 0;
 				retweetsInInterval = 0;
