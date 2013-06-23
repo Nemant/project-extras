@@ -140,6 +140,8 @@ public class Store {
 	}
 	
 	public void updateRetweetsForUser(HashMap<String, User> originalUserInfo, HashMap<String, Integer> originalUserRetweetsCount) {
+		System.out.println("Whaaaaat!!!!3");
+
 		Iterator it = originalUserInfo.entrySet().iterator();
 		while (it.hasNext()) {
 	        Map.Entry pairs = (Map.Entry)it.next();

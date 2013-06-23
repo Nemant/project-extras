@@ -106,7 +106,6 @@ public class Metrics {
         	totalretweets++;
         	originalUserRetweetsCount.put(userID, totalretweets);
         	
-        	// get stuff data from DB, add numbers together, work out average, update it.
         	// BOOM
     	} else {
     		tweetsInInterval++;
