@@ -118,6 +118,7 @@ public class Store {
 
 				if (recordExists) {
 					rs.updateInt(4, totalRetweets);
+					rs.updateRow();
 				} else {
 					rs.moveToInsertRow();
 					rs.updateString("TweetID", tweetID);
@@ -155,6 +156,7 @@ public class Store {
 					rs.updateInt(2, totalRetweets);
 					rs.updateInt(4, totalRetweets / rs.getInt(3));
 					rs.updateFloat(10, (float)Math.round((totalRetweets / rs.getInt(6))*1000) / 1000); // Use dedcimals
+					rs.updateRow();
 				}
 
 			} catch (SQLException e) {
@@ -174,6 +176,7 @@ public class Store {
 				System.out.println("yo!" + rs.getInt(3));
 				rs.updateInt(3, rs.getInt(3) + 1);
 				rs.updateInt(4, rs.getInt(2) / rs.getInt(3));
+				rs.updateRow();
 			} else {
 				rs.moveToInsertRow();
 				rs.updateString("User", Long.toString(value.getId()));
