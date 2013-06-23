@@ -104,9 +104,9 @@ public class Metrics {
         	}
         	
         	totalretweets++;
+        	originalUserInfo.put(userID, tweet.getRetweetedStatus().getUser());
         	originalUserRetweetsCount.put(userID, totalretweets);
         	
-        	// BOOM
     	} else {
     		tweetsInInterval++;
         	usersTweetingInInterval.add(tweet.getUser().getName());
