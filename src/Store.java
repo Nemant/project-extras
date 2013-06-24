@@ -131,7 +131,6 @@ public class Store {
 				}
 				rs.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -140,24 +139,18 @@ public class Store {
 	}
 	
 	public void updateRetweetsForUser(HashMap<String, User> originalUserInfo, HashMap<String, Integer> originalUserRetweetsCount) {
-		System.out.println("Whaaaaat!!!!3");
-
 		Iterator it = originalUserInfo.entrySet().iterator();
 		while (it.hasNext()) {
 	        Map.Entry pairs = (Map.Entry)it.next();
 			String userID = (String) pairs.getKey();
 			User value = (User) pairs.getValue();
-			System.out.println("Whaaaaat!!!!2");
 
-			if (value.getScreenName().equals("danishkhanbcn"))
-			System.out.println("Whaaaaat!!!!");
+
 			ResultSet rs = QueryDB.getRetweetsForUser(userID);
 
 			int totalRetweets = 0;
 			try {
 				if (rs.next()) {
-					System.out.println("yo!" + rs.getInt(2));
-
 					totalRetweets = rs.getInt(2);
 					totalRetweets = totalRetweets + originalUserRetweetsCount.get(userID);
 					rs.updateInt(2, totalRetweets);

@@ -23,7 +23,6 @@ public class TwitterStreamingExample {
 			
 	        public void onStatus(Status tweet) {
 	        	metric.processStatus(tweet);
-//	            System.out.println(tweet.getUser().getName() + " : " + tweet.getText());
 	        }
 	        public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
 	        public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
