@@ -98,6 +98,7 @@ public class Store {
 	}
 
 	public void updateRetweetsForTweet(HashMap<String, Status> originalTweets, HashMap<String, Integer> retweetsForOriginalTweet) {
+		try {
 		Iterator it = originalTweets.entrySet().iterator();
 		while (it.hasNext()) {
 	        Map.Entry pairs = (Map.Entry)it.next();
@@ -136,9 +137,13 @@ public class Store {
 			
 			it.remove();
 		}
+		} catch (Exception e) {
+			
+		}
 	}
 	
 	public void updateRetweetsForUser(HashMap<String, User> originalUserInfo, HashMap<String, Integer> originalUserRetweetsCount) {
+		try{
 		Iterator it = originalUserInfo.entrySet().iterator();
 		while (it.hasNext()) {
 	        Map.Entry pairs = (Map.Entry)it.next();
@@ -164,6 +169,9 @@ public class Store {
 			}
 			
 			it.remove();
+		}
+		} catch (Exception e) {
+			
 		}
 	}
 	

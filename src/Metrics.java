@@ -76,6 +76,11 @@ public class Metrics {
 				retweetsInInterval = 0;
 				usersTweetingInInterval.clear();
 				usersRetweetingInInterval.clear();
+				
+				originalTweets.clear();
+				retweetsForOriginalTweet.clear();
+				originalUserInfo.clear();
+				originalUserRetweetsCount.clear();
 			  }
 			}, 20*1000, 20*1000);
 	}
